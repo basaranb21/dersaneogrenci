@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_vertical">
+
+        <!-- Logo -->
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="DersaneAI" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DersaneAI"
+            android:textColor="#ffffff"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dershane bağlantı ayarı"
+            android:textColor="#cbd5e1"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="32dp" />
+
+        <!-- Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dershanenin sunucu adresi"
+                android:textColor="#1e293b"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Müdürün/öğretmenin verdiği adresi gir. Genelde http://192.168.X.X:8765/ gibi."
+                android:textColor="#64748b"
+                android:textSize="12sp"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/urlInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="http://192.168.1.6:8765/"
+                android:inputType="textUri"
+                android:background="@drawable/bg_input"
+                android:padding="12dp"
+                android:textSize="14sp"
+                android:textColor="#1e293b"
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/testBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🔍 Bağlantıyı Test Et"
+                android:background="@drawable/bg_button_outline"
+                android:textColor="#3b82f6"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/durum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#64748b"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text=" " />
+
+            <Button
+                android:id="@+id/baslatBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🚀 Kaydet ve Başla"
+                android:background="@drawable/bg_button_primary"
+                android:textColor="#ffffff"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="💡 Telefon ve dershane bilgisayarı aynı Wi-Fi'de olmalı"
+            android:textColor="#cbd5e1"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:layout_marginTop="24dp" />
+
+    </LinearLayout>
+</ScrollView>
