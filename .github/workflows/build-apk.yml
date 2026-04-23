@@ -5,7 +5,10 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch:  # Manuel tetikleme
+  workflow_dispatch:
+
+permissions:
+  contents: write  # Release oluşturmak için
 
 jobs:
   build:
@@ -21,27 +24,34 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        gradle-version: '8.4'
+
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x ./gradlew
-      continue-on-error: true
-
-    - name: Generate Gradle wrapper if missing
-      run: |
-        if [ ! -f gradlew ]; then
-          gradle wrapper --gradle-version 8.4
-          chmod +x gradlew
-        fi
+    - name: Generate Gradle wrapper
+      run: gradle wrapper --gradle-version 8.4
 
     - name: Build Release APK
-      run: ./gradlew assembleRelease
+      run: ./gradlew assembleRelease --stacktrace --no-daemon
+      env:
+        GRADLE_OPTS: "-Dorg.gradle.daemon=false -Xmx2048m"
+
+    - name: Find APK
+      id: find_apk
+      run: |
+        APK_PATH=$(find app/build/outputs/apk/release -name "*.apk" | head -n 1)
+        echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
+        echo "APK: $APK_PATH"
+        ls -lh "$APK_PATH"
 
     - name: Rename APK
       run: |
         mkdir -p release
-        cp app/build/outputs/apk/release/app-release.apk release/dersaneai.apk
+        cp "${{ steps.find_apk.outputs.apk_path }}" release/dersaneai.apk
         ls -lh release/
 
     - name: Upload APK as artifact
@@ -51,8 +61,8 @@ jobs:
         path: release/dersaneai.apk
         retention-days: 90
 
-    - name: Create Release (on push to main)
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    - name: Create Release
+      if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
       uses: softprops/action-gh-release@v2
       with:
         tag_name: v1.0.${{ github.run_number }}
@@ -72,5 +82,3 @@ jobs:
         files: release/dersaneai.apk
         draft: false
         prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

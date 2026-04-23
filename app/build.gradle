@@ -18,11 +18,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug   // Debug key ile imzala (Play Store dışı için yeterli)
-        }
-        debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-DEBUG"
+            // Debug key ile imzala — Play Store dışı için yeterli
+            signingConfig signingConfigs.debug
         }
     }
 
